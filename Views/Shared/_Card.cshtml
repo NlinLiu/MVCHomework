@@ -1,0 +1,16 @@
+@model CardViewModel
+
+<div class="card mt-5">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Text</p>
+        @foreach (var link in Model.Links)
+        {
+            <a href="#" class="card-link">@link</a>
+        }
+    </div>
+    <div class="card-footer text-muted">
+        Posted on @DateTime.Now.ToString("yyyy-MM-dd") by me
+    </div>
+</div>
