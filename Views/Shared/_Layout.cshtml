@@ -31,60 +31,16 @@
         </nav>
     </header>
     <div class="container">
-        <div class="row">
-            <div class="col-8">
-                @RenderBody()
+
+        @RenderBody()
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2022 - MVCHomework6 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <div class="col">
-                <div class="card mb-1">
-                    <div class="card-header">
-                        Search
-                    </div>
-                    <div class="card-body">
-                        <form method="get" action="@Url.Action("Search", "Home")" id="searchForm">
-                            <div class="input-group mb-3">
-                                <input type="text" id="searchQuery" name="query" class="form-control" placeholder="Search for..." value="@ViewBag.Query">
-                                <button class="btn btn-outline-secondary" type="submit">Go!</button>
-                                @* <button type="button" id="clearQuery" class="btn btn-outline-secondary" onclick="clearQuery()" >X</button> <!-- 清除按鈕 --> *@
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="card mb-1">
-                    <div class="card-header">
-                        Tags
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-inline">
-                            <li class="list-inline-item"><button type="button" class="btn">demo<span class="badge bg-secondary">5</span></button></li>
-                            <li class="list-inline-item"><button type="button" class="btn">SkillTree<span class="badge bg-secondary">108</span></button></li>
-                            <li class="list-inline-item"><button type="button" class="btn">MVC<span class="badge bg-secondary">6</span></button></li>
-                            <li class="list-inline-item"><button type="button" class="btn">twMVC<span class="badge bg-secondary">87</span></button></li>
-                            <li class="list-inline-item"><button type="button" class="btn">dotBlogs<span class="badge bg-secondary">1024</span></button></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card mb-1">
-                    <div class="card-header">
-                        Featured
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - MVCHomework6 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

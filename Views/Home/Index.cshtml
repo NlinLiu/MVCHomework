@@ -3,22 +3,66 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="row">
+    <div class="col-8">
+        @foreach (var card in Model)
+        {
+            @Html.Partial("_Card", card)
+        }
 
-@foreach (var card in Model)
-{
-    @Html.Partial("_Card", card)
-}
 
-<nav class="mt-4">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col">
+        <div class="card mb-1">
+            <div class="card-header">
+                Search
+            </div>
+            <div class="card-body">
+                <form method="get" action="@Url.Action("Search", "Home")" id="searchForm">
+                    <div class="input-group mb-3">
+                        <input type="text" id="searchQuery" name="query" class="form-control" placeholder="Search for..." value="@ViewBag.Query">
+                        <button class="btn btn-outline-secondary" type="submit">Go!</button>
+                        @* <button type="button" id="clearQuery" class="btn btn-outline-secondary" onclick="clearQuery()" >X</button> <!-- 清除按鈕 --> *@
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-1">
+            <div class="card-header">
+                Tags
+            </div>
+            <div class="card-body">
+                <ul class="list-inline">
+                    <li class="list-inline-item"><button type="button" class="btn">demo<span class="badge bg-secondary">5</span></button></li>
+                    <li class="list-inline-item"><button type="button" class="btn">SkillTree<span class="badge bg-secondary">108</span></button></li>
+                    <li class="list-inline-item"><button type="button" class="btn">MVC<span class="badge bg-secondary">6</span></button></li>
+                    <li class="list-inline-item"><button type="button" class="btn">twMVC<span class="badge bg-secondary">87</span></button></li>
+                    <li class="list-inline-item"><button type="button" class="btn">dotBlogs<span class="badge bg-secondary">1024</span></button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-1">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>

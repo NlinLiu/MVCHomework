@@ -24,17 +24,14 @@ namespace MVCHomework6.Controllers
         public IActionResult Index()
         {
             var articles = _context.Articles.ToList();
-
-            // 轉換為 CardViewModel
             var viewModels = articles.Select(a => new CardViewModel
             {
-                ImageUrl = a.CoverPhoto, // 如果需要，請將此部分替換為正確的圖片URL屬性
+                ImageUrl = a.CoverPhoto,
                 Title = a.Title,
                 Text = a.Body,
-                Links = a.Tags.Split(',').ToList() // 假設標籤存儲為逗號分隔的字符串
+                Links = a.Tags.Split(',').ToList()
             }).ToList();
 
-            // 將轉換後的 List<CardViewModel> 返回給視圖
             return View(viewModels);
         }
 
