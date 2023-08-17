@@ -21,19 +21,17 @@ namespace MVCHomework6.Controllers
             _articleService = articleService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? p, string query)
         {
-            var articles = _context.Articles.ToList();
-            var viewModels = articles.Select(a => new CardViewModel
-            {
-                ImageUrl = a.CoverPhoto,
-                Title = a.Title,
-                Text = a.Body,
-                Links = a.Tags.Split(',').ToList()
-            }).ToList();
+            //建議改成擴充方法
+            var pageNumber = p.HasValue ? p.Value < 1 ? 1 : p.Value : 1;
 
-            return View(viewModels);
+            var pageSize = 6; //建議抽成設定檔
+            ViewData.Model = await _articleService.SearchArticles(query, pageNumber, pageSize);
+            ViewBag.Query = query;
+            return View();
         }
+
 
         public IActionResult Privacy()
         {
@@ -44,16 +42,6 @@ namespace MVCHomework6.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public ActionResult Search(string query)
-        {
-            {
-                List<CardViewModel> viewModels = _articleService.SearchArticles(query);
-                ViewBag.Query = query;
-                return View("Index", viewModels);
-            }
-
         }
     }
 }

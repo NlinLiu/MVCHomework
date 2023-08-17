@@ -1,4 +1,9 @@
-﻿@model List<CardViewModel>
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Web.Common
+@using MVCHomework6.Models;
+@using MVCHomework6.Data.Database;
+@model IEnumerable<Articles>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,19 +16,26 @@
         }
 
 
-        <nav class="mt-4">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
+                                                                        {
+                                                                            p = page,
+                                                                            query = ViewBag.Query
+                                                                        }),
+                        new PagedListRenderOptions
+                        {
+                            UlElementClasses = new[] { "pagination" },
+                            LiElementClasses = new[] { "page-item" },
+                            PageClasses = new[] { "page-link" },
+                            LinkToPreviousPageFormat = "←上一頁",
+                            LinkToNextPageFormat = "下一頁→",
+                            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+                            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                        })
+        @{
+            var pagedInfo = (IPagedList)Model;
+        }
     </div>
     <div class="col">
         <div class="card mb-1">
@@ -31,7 +43,7 @@
                 Search
             </div>
             <div class="card-body">
-                <form method="get" action="@Url.Action("Search", "Home")" id="searchForm">
+                <form method="get" action="@Url.Action("Index", "Home")" id="searchForm">
                     <div class="input-group mb-3">
                         <input type="text" id="searchQuery" name="query" class="form-control" placeholder="Search for..." value="@ViewBag.Query">
                         <button class="btn btn-outline-secondary" type="submit">Go!</button>

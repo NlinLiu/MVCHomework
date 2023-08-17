@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using MVCHomework6.Data.Database;
+using X.PagedList;
+
 namespace MVCHomework6.Service
 {
 
@@ -10,7 +13,7 @@ namespace MVCHomework6.Service
             _context = context;
         }
 
-        public List<CardViewModel> SearchArticles(string query)
+        public async ValueTask<IPagedList<Articles>> SearchArticles(string query, int pageNumber, int pageSize)
         {
             List<Articles> articles = new List<Articles>();
             if (string.IsNullOrEmpty(query))
@@ -22,20 +25,19 @@ namespace MVCHomework6.Service
                 articles = _context.Articles.Where(a => a.Title.Contains(query) || a.Body.Contains(query)).ToList();
 
             }
-            List<CardViewModel> viewModels = new List<CardViewModel>();
-            if (articles.Count() > 0)
-            {
 
-                viewModels = articles.Select(a => new CardViewModel
-                {
-                    ImageUrl = a.CoverPhoto,
-                    Title = a.Title,
-                    Text = a.Body,
-                    Links = a.Tags.Split(',').ToList()
-                }).ToList();
-            }
 
-            return viewModels;
+            return await articles.ToPagedListAsync(pageNumber, pageSize);
+        }
+
+        public async ValueTask<IList<Articles>> LookUpAllDataAsync()
+        {
+            return await _context.Articles.ToListAsync();
+        }
+
+        public async ValueTask<IPagedList<Articles>> LookupPagedListAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Articles.ToPagedListAsync(pageNumber, pageSize);
         }
     }
 }
