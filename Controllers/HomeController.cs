@@ -27,10 +27,16 @@ namespace MVCHomework6.Controllers
             var pageNumber = p.HasValue ? p.Value < 1 ? 1 : p.Value : 1;
 
             var pageSize = 6; //建議抽成設定檔
-            ViewData.Model = await _articleService.SearchArticles(query, pageNumber, pageSize);
+            var (articles, tags) = await _articleService.SearchArticles(query, pageNumber, pageSize);
+            ViewData.Model = articles;
             ViewBag.Query = query;
+
+
+            ViewBag.Tags = tags;
+
             return View();
         }
+
 
 
         public IActionResult Privacy()

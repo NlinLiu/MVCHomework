@@ -13,7 +13,7 @@ namespace MVCHomework6.Service
             _context = context;
         }
 
-        public async ValueTask<IPagedList<Articles>> SearchArticles(string query, int pageNumber, int pageSize)
+        public async ValueTask<(IPagedList<Articles>, List<TagCount>)> SearchArticles(string query, int pageNumber, int pageSize)
         {
             List<Articles> articles = new List<Articles>();
             if (string.IsNullOrEmpty(query))
@@ -26,8 +26,13 @@ namespace MVCHomework6.Service
 
             }
 
-
-            return await articles.ToPagedListAsync(pageNumber, pageSize);
+            var tags = articles
+                                   .SelectMany(a => a.Tags.Split(','))
+                                   .GroupBy(t => t)
+                                   .Select(g => new TagCount { Tag = g.Key, Count = g.Count() })
+                                   .ToList();
+            var pagedArticles = await articles.ToPagedListAsync(pageNumber, pageSize);
+            return (pagedArticles, tags);
         }
 
         public async ValueTask<IList<Articles>> LookUpAllDataAsync()
