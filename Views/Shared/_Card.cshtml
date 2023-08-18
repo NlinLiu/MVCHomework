@@ -5,7 +5,7 @@
     <img src="@Model.CoverPhoto" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">@Model.Title</h5>
-        <p class="card-text">@Model.Body</p>
+        <p class="card-text">@Html.Raw(Model.Body)</p>
         @foreach (var tag in Model.Tags.Split(','))
         {
             <a href="#" class="card-link">@tag</a>
